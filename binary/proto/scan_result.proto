@@ -802,6 +802,7 @@ message SecretData {
     DenoPat deno_pat = 73;
     HerokuSecretKey heroku_secret_key = 74;
     NpmJsAccessToken npmjs_access_token = 75;
+    ClojarsDeployToken clojars_deploy_token = 76;
   }
 
   message GCPSAK {
@@ -827,6 +828,10 @@ message SecretData {
 
   message JWTToken {
     // a generic JWT token
+    string token = 1;
+  }
+
+  message ClojarsDeployToken {
     string token = 1;
   }
 
