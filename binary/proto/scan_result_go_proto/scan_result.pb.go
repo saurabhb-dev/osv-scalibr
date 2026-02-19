@@ -5720,7 +5720,7 @@ type SecretData struct {
 	//	*SecretData_DenoPat_
 	//	*SecretData_HerokuSecretKey_
 	//	*SecretData_NpmjsAccessToken
-	//	*SecretData_ClojarsDeployToken_
+	//	*SecretData_CloudflareApiToken
 	Secret        isSecretData_Secret `protobuf_oneof:"secret"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -6438,10 +6438,10 @@ func (x *SecretData) GetNpmjsAccessToken() *SecretData_NpmJsAccessToken {
 	return nil
 }
 
-func (x *SecretData) GetClojarsDeployToken() *SecretData_ClojarsDeployToken {
+func (x *SecretData) GetCloudflareApiToken() *SecretData_CloudflareAPIToken {
 	if x != nil {
-		if x, ok := x.Secret.(*SecretData_ClojarsDeployToken_); ok {
-			return x.ClojarsDeployToken
+		if x, ok := x.Secret.(*SecretData_CloudflareApiToken); ok {
+			return x.CloudflareApiToken
 		}
 	}
 	return nil
@@ -6751,8 +6751,8 @@ type SecretData_NpmjsAccessToken struct {
 	NpmjsAccessToken *SecretData_NpmJsAccessToken `protobuf:"bytes,75,opt,name=npmjs_access_token,json=npmjsAccessToken,proto3,oneof"`
 }
 
-type SecretData_ClojarsDeployToken_ struct {
-	ClojarsDeployToken *SecretData_ClojarsDeployToken `protobuf:"bytes,76,opt,name=clojars_deploy_token,json=clojarsDeployToken,proto3,oneof"`
+type SecretData_CloudflareApiToken struct {
+	CloudflareApiToken *SecretData_CloudflareAPIToken `protobuf:"bytes,76,opt,name=cloudflare_api_token,json=cloudflareApiToken,proto3,oneof"`
 }
 
 func (*SecretData_Gcpsak) isSecretData_Secret() {}
@@ -6905,7 +6905,7 @@ func (*SecretData_HerokuSecretKey_) isSecretData_Secret() {}
 
 func (*SecretData_NpmjsAccessToken) isSecretData_Secret() {}
 
-func (*SecretData_ClojarsDeployToken_) isSecretData_Secret() {}
+func (*SecretData_CloudflareApiToken) isSecretData_Secret() {}
 
 type SecretStatus struct {
 	state         protoimpl.MessageState        `protogen:"open.v1"`
@@ -8515,6 +8515,50 @@ func (x *SecretData_DockerHubPat) GetPat() string {
 func (x *SecretData_DockerHubPat) GetUsername() string {
 	if x != nil {
 		return x.Username
+	}
+	return ""
+}
+
+type SecretData_CloudflareAPIToken struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SecretData_CloudflareAPIToken) Reset() {
+	*x = SecretData_CloudflareAPIToken{}
+	mi := &file_proto_scan_result_proto_msgTypes[91]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SecretData_CloudflareAPIToken) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecretData_CloudflareAPIToken) ProtoMessage() {}
+
+func (x *SecretData_CloudflareAPIToken) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_scan_result_proto_msgTypes[91]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecretData_CloudflareAPIToken.ProtoReflect.Descriptor instead.
+func (*SecretData_CloudflareAPIToken) Descriptor() ([]byte, []int) {
+	return file_proto_scan_result_proto_rawDescGZIP(), []int{62, 16}
+}
+
+func (x *SecretData_CloudflareAPIToken) GetToken() string {
+	if x != nil {
+		return x.Token
 	}
 	return ""
 }
@@ -12034,7 +12078,7 @@ const file_proto_scan_result_proto_rawDesc = "" +
 	"\bdeno_pat\x18I \x01(\v2\x1b.scalibr.SecretData.DenoPatH\x00R\adenoPat\x12Q\n" +
 	"\x11heroku_secret_key\x18J \x01(\v2#.scalibr.SecretData.HerokuSecretKeyH\x00R\x0fherokuSecretKey\x12T\n" +
 	"\x12npmjs_access_token\x18K \x01(\v2$.scalibr.SecretData.NpmJsAccessTokenH\x00R\x10npmjsAccessToken\x12Z\n" +
-	"\x14clojars_deploy_token\x18L \x01(\v2&.scalibr.SecretData.ClojarsDeployTokenH\x00R\x12clojarsDeployToken\x1a\xb0\x03\n" +
+	"\x14cloudflare_api_token\x18L \x01(\v2&.scalibr.SecretData.CloudflareAPITokenH\x00R\x12cloudflareApiToken\x1a\xb0\x03\n" +
 	"\x06GCPSAK\x12$\n" +
 	"\x0eprivate_key_id\x18\x01 \x01(\tR\fprivateKeyId\x12!\n" +
 	"\fclient_email\x18\x02 \x01(\tR\vclientEmail\x12\x1c\n" +
@@ -12093,7 +12137,9 @@ const file_proto_scan_result_proto_rawDesc = "" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x1a<\n" +
 	"\fDockerHubPat\x12\x10\n" +
 	"\x03pat\x18\x01 \x01(\tR\x03pat\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\x1a\x1b\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x1a*\n" +
+	"\x12CloudflareAPIToken\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x1a\x1b\n" +
 	"\aDenoPat\x12\x10\n" +
 	"\x03pat\x18\x01 \x01(\tR\x03pat\x1a\x1d\n" +
 	"\tGitlabPat\x12\x10\n" +
@@ -12430,24 +12476,24 @@ var file_proto_scan_result_proto_goTypes = []any{
 	(*BaseImageDetails)(nil),                      // 76: scalibr.BaseImageDetails
 	(*LayerMetadata)(nil),                         // 77: scalibr.LayerMetadata
 	(*Package_ContainerImageMetadataIndexes)(nil), // 78: scalibr.Package.ContainerImageMetadataIndexes
-	nil,                                   // 79: scalibr.PodmanMetadata.ExposedPortsEntry
-	(*SecretData_GCPSAK)(nil),             // 80: scalibr.SecretData.GCPSAK
-	(*SecretData_JWTToken)(nil),           // 81: scalibr.SecretData.JWTToken
-	(*SecretData_ClojarsDeployToken)(nil), // 82: scalibr.SecretData.ClojarsDeployToken
-	(*SecretData_AnthropicWorkspaceAPIKey)(nil),             // 83: scalibr.SecretData.AnthropicWorkspaceAPIKey
-	(*SecretData_AnthropicModelAPIKey)(nil),                 // 84: scalibr.SecretData.AnthropicModelAPIKey
-	(*SecretData_PerplexityAPIKey)(nil),                     // 85: scalibr.SecretData.PerplexityAPIKey
-	(*SecretData_MistralAPIKey)(nil),                        // 86: scalibr.SecretData.MistralAPIKey
-	(*SecretData_GrokXAIAPIKey)(nil),                        // 87: scalibr.SecretData.GrokXAIAPIKey
-	(*SecretData_GrokXAIManagementAPIKey)(nil),              // 88: scalibr.SecretData.GrokXAIManagementAPIKey
-	(*SecretData_AzureStorageAccountAccessKey)(nil),         // 89: scalibr.SecretData.AzureStorageAccountAccessKey
-	(*SecretData_PrivateKey)(nil),                           // 90: scalibr.SecretData.PrivateKey
-	(*SecretData_AzureAccessToken)(nil),                     // 91: scalibr.SecretData.AzureAccessToken
-	(*SecretData_Pgpass)(nil),                               // 92: scalibr.SecretData.Pgpass
-	(*SecretData_MariaDBCredentials)(nil),                   // 93: scalibr.SecretData.MariaDBCredentials
-	(*SecretData_AzureIdentityToken)(nil),                   // 94: scalibr.SecretData.AzureIdentityToken
-	(*SecretData_OpenAIAPIKey)(nil),                         // 95: scalibr.SecretData.OpenAIAPIKey
-	(*SecretData_DockerHubPat)(nil),                         // 96: scalibr.SecretData.DockerHubPat
+	nil,                         // 79: scalibr.PodmanMetadata.ExposedPortsEntry
+	(*SecretData_GCPSAK)(nil),   // 80: scalibr.SecretData.GCPSAK
+	(*SecretData_JWTToken)(nil), // 81: scalibr.SecretData.JWTToken
+	(*SecretData_AnthropicWorkspaceAPIKey)(nil),             // 82: scalibr.SecretData.AnthropicWorkspaceAPIKey
+	(*SecretData_AnthropicModelAPIKey)(nil),                 // 83: scalibr.SecretData.AnthropicModelAPIKey
+	(*SecretData_PerplexityAPIKey)(nil),                     // 84: scalibr.SecretData.PerplexityAPIKey
+	(*SecretData_MistralAPIKey)(nil),                        // 85: scalibr.SecretData.MistralAPIKey
+	(*SecretData_GrokXAIAPIKey)(nil),                        // 86: scalibr.SecretData.GrokXAIAPIKey
+	(*SecretData_GrokXAIManagementAPIKey)(nil),              // 87: scalibr.SecretData.GrokXAIManagementAPIKey
+	(*SecretData_AzureStorageAccountAccessKey)(nil),         // 88: scalibr.SecretData.AzureStorageAccountAccessKey
+	(*SecretData_PrivateKey)(nil),                           // 89: scalibr.SecretData.PrivateKey
+	(*SecretData_AzureAccessToken)(nil),                     // 90: scalibr.SecretData.AzureAccessToken
+	(*SecretData_Pgpass)(nil),                               // 91: scalibr.SecretData.Pgpass
+	(*SecretData_MariaDBCredentials)(nil),                   // 92: scalibr.SecretData.MariaDBCredentials
+	(*SecretData_AzureIdentityToken)(nil),                   // 93: scalibr.SecretData.AzureIdentityToken
+	(*SecretData_OpenAIAPIKey)(nil),                         // 94: scalibr.SecretData.OpenAIAPIKey
+	(*SecretData_DockerHubPat)(nil),                         // 95: scalibr.SecretData.DockerHubPat
+	(*SecretData_CloudflareAPIToken)(nil),                   // 96: scalibr.SecretData.CloudflareAPIToken
 	(*SecretData_DenoPat)(nil),                              // 97: scalibr.SecretData.DenoPat
 	(*SecretData_GitlabPat)(nil),                            // 98: scalibr.SecretData.GitlabPat
 	(*SecretData_SlackAppLevelToken)(nil),                   // 99: scalibr.SecretData.SlackAppLevelToken
@@ -12594,19 +12640,19 @@ var file_proto_scan_result_proto_depIdxs = []int32{
 	68,  // 77: scalibr.Secret.status:type_name -> scalibr.SecretStatus
 	69,  // 78: scalibr.Secret.locations:type_name -> scalibr.Location
 	80,  // 79: scalibr.SecretData.gcpsak:type_name -> scalibr.SecretData.GCPSAK
-	83,  // 80: scalibr.SecretData.anthropic_workspace_api_key:type_name -> scalibr.SecretData.AnthropicWorkspaceAPIKey
-	84,  // 81: scalibr.SecretData.anthropic_model_api_key:type_name -> scalibr.SecretData.AnthropicModelAPIKey
-	85,  // 82: scalibr.SecretData.perplexity:type_name -> scalibr.SecretData.PerplexityAPIKey
-	90,  // 83: scalibr.SecretData.private_key:type_name -> scalibr.SecretData.PrivateKey
-	87,  // 84: scalibr.SecretData.grok_xai_api_key:type_name -> scalibr.SecretData.GrokXAIAPIKey
-	88,  // 85: scalibr.SecretData.grok_xai_management_api_key:type_name -> scalibr.SecretData.GrokXAIManagementAPIKey
-	96,  // 86: scalibr.SecretData.docker_hub_pat:type_name -> scalibr.SecretData.DockerHubPat
+	82,  // 80: scalibr.SecretData.anthropic_workspace_api_key:type_name -> scalibr.SecretData.AnthropicWorkspaceAPIKey
+	83,  // 81: scalibr.SecretData.anthropic_model_api_key:type_name -> scalibr.SecretData.AnthropicModelAPIKey
+	84,  // 82: scalibr.SecretData.perplexity:type_name -> scalibr.SecretData.PerplexityAPIKey
+	89,  // 83: scalibr.SecretData.private_key:type_name -> scalibr.SecretData.PrivateKey
+	86,  // 84: scalibr.SecretData.grok_xai_api_key:type_name -> scalibr.SecretData.GrokXAIAPIKey
+	87,  // 85: scalibr.SecretData.grok_xai_management_api_key:type_name -> scalibr.SecretData.GrokXAIManagementAPIKey
+	95,  // 86: scalibr.SecretData.docker_hub_pat:type_name -> scalibr.SecretData.DockerHubPat
 	105, // 87: scalibr.SecretData.digitalocean:type_name -> scalibr.SecretData.DigitalOceanAPIToken
-	95,  // 88: scalibr.SecretData.openai_api_key:type_name -> scalibr.SecretData.OpenAIAPIKey
+	94,  // 88: scalibr.SecretData.openai_api_key:type_name -> scalibr.SecretData.OpenAIAPIKey
 	102, // 89: scalibr.SecretData.postman_api_key:type_name -> scalibr.SecretData.PostmanAPIKey
 	103, // 90: scalibr.SecretData.postman_collection_access_token:type_name -> scalibr.SecretData.PostmanCollectionAccessToken
-	91,  // 91: scalibr.SecretData.azure_access_token:type_name -> scalibr.SecretData.AzureAccessToken
-	94,  // 92: scalibr.SecretData.azure_identity_token:type_name -> scalibr.SecretData.AzureIdentityToken
+	90,  // 91: scalibr.SecretData.azure_access_token:type_name -> scalibr.SecretData.AzureAccessToken
+	93,  // 92: scalibr.SecretData.azure_identity_token:type_name -> scalibr.SecretData.AzureIdentityToken
 	115, // 93: scalibr.SecretData.tink_keyset:type_name -> scalibr.SecretData.TinkKeyset
 	98,  // 94: scalibr.SecretData.gitlab_pat:type_name -> scalibr.SecretData.GitlabPat
 	116, // 95: scalibr.SecretData.hashicorp_vault_token:type_name -> scalibr.SecretData.HashiCorpVaultToken
@@ -12628,17 +12674,17 @@ var file_proto_scan_result_proto_depIdxs = []int32{
 	101, // 111: scalibr.SecretData.slack_app_config_refresh_token:type_name -> scalibr.SecretData.SlackAppConfigRefreshToken
 	99,  // 112: scalibr.SecretData.slack_app_level_token:type_name -> scalibr.SecretData.SlackAppLevelToken
 	100, // 113: scalibr.SecretData.slack_app_config_access_token:type_name -> scalibr.SecretData.SlackAppConfigAccessToken
-	89,  // 114: scalibr.SecretData.azure_storage_account_access_key:type_name -> scalibr.SecretData.AzureStorageAccountAccessKey
+	88,  // 114: scalibr.SecretData.azure_storage_account_access_key:type_name -> scalibr.SecretData.AzureStorageAccountAccessKey
 	120, // 115: scalibr.SecretData.hashicorp_cloud_platform_credentials:type_name -> scalibr.SecretData.HashiCorpCloudPlatformCredentials
 	121, // 116: scalibr.SecretData.hashicorp_cloud_platform_token:type_name -> scalibr.SecretData.HashiCorpCloudPlatformToken
 	131, // 117: scalibr.SecretData.onepassword_secret_key:type_name -> scalibr.SecretData.OnePasswordSecretKey
 	132, // 118: scalibr.SecretData.onepassword_service_token:type_name -> scalibr.SecretData.OnePasswordServiceToken
 	133, // 119: scalibr.SecretData.onepassword_recovery_code:type_name -> scalibr.SecretData.OnePasswordRecoveryCode
 	130, // 120: scalibr.SecretData.onepassword_connect_token:type_name -> scalibr.SecretData.OnePasswordConnectToken
-	92,  // 121: scalibr.SecretData.pgpass:type_name -> scalibr.SecretData.Pgpass
+	91,  // 121: scalibr.SecretData.pgpass:type_name -> scalibr.SecretData.Pgpass
 	114, // 122: scalibr.SecretData.pypi:type_name -> scalibr.SecretData.PyPIAPIToken
 	106, // 123: scalibr.SecretData.crates_io_api_token:type_name -> scalibr.SecretData.CratesIOAPIToken
-	93,  // 124: scalibr.SecretData.maria_db_credentials:type_name -> scalibr.SecretData.MariaDBCredentials
+	92,  // 124: scalibr.SecretData.maria_db_credentials:type_name -> scalibr.SecretData.MariaDBCredentials
 	127, // 125: scalibr.SecretData.gcs_hmac_key:type_name -> scalibr.SecretData.GCSHmacKey
 	128, // 126: scalibr.SecretData.mysql_mylogin_section:type_name -> scalibr.SecretData.MysqlMyloginSection
 	129, // 127: scalibr.SecretData.vapid_key:type_name -> scalibr.SecretData.VapidKey
@@ -12658,7 +12704,7 @@ var file_proto_scan_result_proto_depIdxs = []int32{
 	148, // 141: scalibr.SecretData.salesforce_oauth2_client_credentials:type_name -> scalibr.SecretData.SalesforceOAuth2ClientCredentials
 	146, // 142: scalibr.SecretData.salesforce_oauth2_access_token:type_name -> scalibr.SecretData.SalesforceOAuth2AccessToken
 	149, // 143: scalibr.SecretData.salesforce_oauth2_refresh_credentials:type_name -> scalibr.SecretData.SalesforceOAuth2RefreshCredentials
-	86,  // 144: scalibr.SecretData.mistral_api_key:type_name -> scalibr.SecretData.MistralAPIKey
+	85,  // 144: scalibr.SecretData.mistral_api_key:type_name -> scalibr.SecretData.MistralAPIKey
 	152, // 145: scalibr.SecretData.circleci_personal_access_token:type_name -> scalibr.SecretData.CircleCIPersonalAccessToken
 	153, // 146: scalibr.SecretData.circleci_project_token:type_name -> scalibr.SecretData.CircleCIProjectToken
 	155, // 147: scalibr.SecretData.square_personal_access_token:type_name -> scalibr.SecretData.SquarePersonalAccessToken
@@ -12668,7 +12714,7 @@ var file_proto_scan_result_proto_depIdxs = []int32{
 	97,  // 151: scalibr.SecretData.deno_pat:type_name -> scalibr.SecretData.DenoPat
 	143, // 152: scalibr.SecretData.heroku_secret_key:type_name -> scalibr.SecretData.HerokuSecretKey
 	107, // 153: scalibr.SecretData.npmjs_access_token:type_name -> scalibr.SecretData.NpmJsAccessToken
-	82,  // 154: scalibr.SecretData.clojars_deploy_token:type_name -> scalibr.SecretData.ClojarsDeployToken
+	96,  // 154: scalibr.SecretData.cloudflare_api_token:type_name -> scalibr.SecretData.CloudflareAPIToken
 	4,   // 155: scalibr.SecretStatus.status:type_name -> scalibr.SecretStatus.SecretStatusEnum
 	158, // 156: scalibr.SecretStatus.last_updated:type_name -> google.protobuf.Timestamp
 	70,  // 157: scalibr.Location.filepath:type_name -> scalibr.Filepath
@@ -12817,7 +12863,7 @@ func file_proto_scan_result_proto_init() {
 		(*SecretData_DenoPat_)(nil),
 		(*SecretData_HerokuSecretKey_)(nil),
 		(*SecretData_NpmjsAccessToken)(nil),
-		(*SecretData_ClojarsDeployToken_)(nil),
+		(*SecretData_CloudflareApiToken)(nil),
 	}
 	file_proto_scan_result_proto_msgTypes[64].OneofWrappers = []any{
 		(*Location_Filepath)(nil),
