@@ -143,6 +143,8 @@ message Package {
     ChocolateyPackageMetadata chocolatey_metadata = 62;
     MiseMetadata mise_metadata = 63;
     UnknownBinaryMetadata unknown_binary_metadata = 64;
+    BazelMavenMetadata bazel_maven_metadata = 65;
+    JavascriptDenoMetadata deno_metadata = 66;
   }
   // LINT.ThenChange(/binary/proto/package_metadata.go)
 
@@ -346,6 +348,17 @@ enum PackageSource {
   // LOCAL is the local filesystem that stores the package versions.
   // This is used for when the package is locally-developed or -installed.
   LOCAL = 3;
+}
+
+// The additional data of a deno package.
+message JavascriptDenoMetadata {
+  oneof cdn {
+    bool from_denoland_cdn = 1;
+    bool from_unpkg_cdn = 2;
+    bool from_esm_cdn = 3;
+  }
+
+  string url = 4;
 }
 
 // The additional data found in APK packages.
@@ -686,6 +699,14 @@ message NodeVersionMetadata {
   string nodejs_version = 2;
 }
 
+message BazelMavenMetadata {
+  string name = 1;
+  string group_id = 2;
+  string artifact_id = 3;
+  string version = 4;
+  string rule_name = 5;
+}
+
 message DockerPort {
   string ip = 1;
   uint32 private_port = 2;
@@ -803,8 +824,10 @@ message SecretData {
     HerokuSecretKey heroku_secret_key = 74;
     NpmJsAccessToken npmjs_access_token = 75;
     CloudflareAPIToken cloudflare_api_token = 76;
-    ClojarsDeployToken clojars_deploy_token = 77;
-    
+    SupabasePAT supabase_pat = 77;
+    SupabaseProjectSecretKey supabase_project_secret_key = 78;
+    SupabaseServiceRoleJWT supabase_service_role_jwt = 79;
+    ClojarsDeployToken clojars_deploy_token = 80;
   }
 
   message GCPSAK {
@@ -990,10 +1013,9 @@ message SecretData {
   }
 
   message HashiCorpVaultAppRoleCredentials {
+    reserved 3;
     string role_id = 1;
     string secret_id = 2;
-    string id =
-        3;  // General ID field for uncertain UUID types when context is unclear
   }
 
   message GCPAPIKey {
@@ -1034,6 +1056,19 @@ message SecretData {
 
   message StripeWebhookSecret {
     string key = 1;
+  }
+
+  message SupabasePAT {
+    string token = 1;
+  }
+
+  message SupabaseProjectSecretKey {
+    string key = 1;
+    string project_ref = 2;
+  }
+
+  message SupabaseServiceRoleJWT {
+    string token = 1;
   }
 
   message GCPOAuth2ClientCredentials {
