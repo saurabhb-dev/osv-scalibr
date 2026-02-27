@@ -214,7 +214,9 @@ var (
 	}
 
 	// Default enrichers.
-	Default = concat()
+	Default = concat(
+		SecretsEnrich,
+	)
 
 	// All enrichers.
 	All = concat(
